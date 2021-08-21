@@ -1,7 +1,6 @@
-import time
 import multiprocessing
 from pynput import keyboard as kb
-import automation
+import scripts.automation as automation
 
 # Automation Process
 automation_process = multiprocessing.Process(target=automation.run)
