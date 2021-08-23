@@ -2,57 +2,46 @@ import pyautogui as pg
 import pydirectinput as pd
 
 import time
-import multiprocessing
+import threading
 
 from scripts.state import State
-from scripts.state import check_battle_state_indicator
+from scripts.state import check_walk_state_indicator
 
 import scripts.battle as battle
 import scripts.walking as walk
-# processes: state indicator < battle, walking
 
-import atexit
-
-current_state = State.WALKING
-
-# state_indicator_process = multiprocessing.Process(target=state_indicator)
-battle_process = None
-walking_process = None
+# Store the process here (must implement the interface run())
+current_state_process = None
 
 
-def state_indicator():
-    global current_state
-    walking_process = multiprocessing.Process(target=walk.run)
-    walking_process.start()
+def state_check():
+    global current_state_process
     while True:
-        fetched_state = check_battle_state_indicator()
-        if (fetched_state == State.BATTLING and current_state == State.WALKING):
-            current_state = fetched_state
-            # Terminate WALKING
-            walking_process.terminate()
-            print("Terminated WALKING")
-            # Start BATTLING
-            print("Starting BATTLE")
-            battle_process = multiprocessing.Process(target=battle.run)
-            battle_process.start()
-        elif (fetched_state == State.WALKING and current_state == State.BATTLING):
-            print(
-                "Battle State Indicator went missing, queuing for termination...")
-            time.sleep(4)
-            refetch_state = check_battle_state_indicator()
-            if (refetch_state == State.WALKING):
-                current_state = refetch_state
-                # Terminate BATTLING
-                battle_process.terminate()
-                print("Terminated BATTLE")
-                # Start WALKING
-                print("Starting WALKING")
-                walking_process = multiprocessing.Process(target=walk.run)
-                walking_process.start()
-    pass
+        current_state = check_walk_state_indicator()
+        print(current_state)
+        if (current_state == State.WALKING):
+            current_state_process = walk
+        elif (current_state == State.BATTLING):
+            current_state_process = battle
+
+
+def other():
+    global current_state_process
+    while True:
+        if (current_state_process != None):
+            current_state_process.run()
+
+
+state_check_process = None
+other_process = None
 
 
 def run():
-    state_indicator()
-    # battle_process.start()
-    # walking_process.start()
+    print("Automation Start!")
+    state_check_process = threading.Thread(target=state_check)
+    other_process = threading.Thread(target=other)
+
+    state_check_process.start()
+    other_process.start()
+    other_process.join()
+    state_check_process.join()

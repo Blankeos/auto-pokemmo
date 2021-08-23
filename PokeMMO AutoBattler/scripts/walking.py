@@ -10,22 +10,11 @@ def move(directionKey, steps):
         pd.press(directionKey)
 
 
-def countdown():
-    # print("Walking will start in:")
-    # print("3")
-    time.sleep(0.5)
-    # print("2")
-    time.sleep(0.5)
-    # print("1")
-    # print("Script started!")
-
-
 def moveLeftAndRight():
-    while True:
-        move("left", 3)
-        move("right", 3)
+    move("left", 3)
+    move("right", 3)
 
 
 def run():
-    countdown()
+    # print("WALKING")
     moveLeftAndRight()
