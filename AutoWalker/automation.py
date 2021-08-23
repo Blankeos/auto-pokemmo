@@ -1,6 +1,6 @@
+import pyautogui as pg
 import pydirectinput as pd
 import time
-
 
 def move(directionKey, steps):
     """
@@ -9,12 +9,13 @@ def move(directionKey, steps):
     for i in range(steps):
         pd.press(directionKey)
 
-
-def moveLeftAndRight():
-    move("left", 3)
-    move("right", 3)
-
-
 def run():
-    # print("WALKING")
-    moveLeftAndRight()
+    print("Starting walker")
+    while True:
+        move("left", 15)
+        move("right", 15)
+    pass
+
+
+
+
