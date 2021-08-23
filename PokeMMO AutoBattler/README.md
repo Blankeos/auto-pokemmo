@@ -2,4 +2,4 @@
 
 A script that trains my Pokemon in PokeMMO for me while I afk.
 
-Built with PyAutoGUI
+Built with PyAutoGUIz
