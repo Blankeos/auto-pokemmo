@@ -23,3 +23,13 @@ But for now, the bots just run on console.
 3. Run `main.py`
 4. Once ran, the bot will start firing inputs so make sure to put your focus on the game. 
 > That also means you can't use the computer while the bot is running. (Very unintuitive, I know. But at least you don't have to do the mundane work anymore)
+
+### For AutoBattler
+
+> You need to make sure that you put your character's head on the `/images` folder.
+> Replace these images
+```
+player_faceright.png
+player_faceleft.png
+```
+> This is how the bot recognizes whether or not you're currently battling or looking for wild pokemon
