@@ -52,17 +52,7 @@ def state_indicator():
     pass
 
 
-def terminate_all():
-    print("Terminating Everything!")
-    if (battle_process != None):
-        battle_process.terminate()
-    if (walking_process != None):
-        walking_process.terminate()
-    pass
-
-
 def run():
-    atexit.register(terminate_all)
     state_indicator()
     # battle_process.start()
     # walking_process.start()
